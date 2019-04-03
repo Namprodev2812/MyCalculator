@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private int itemPhay;
     private int feel;
     private int feelResult;
+    private int first;
 
     private Button btn_number0, btn_number1, btn_number2, btn_number3, btn_number4, btn_number5, btn_number6, btn_number7, btn_number8, btn_number9;
     private Button btn_number_cong, btn_number_C, btn_number_tru, btn_number_AC, btn_number_nhan, btn_number_phay, btn_number_chia, btn_number_result;
@@ -201,7 +202,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_number_cong: {
 
                 feel = 0;
-                //feelResult = 1;
                 input = edt_input.getText().toString();
                 if (input.equals("")) {
                     Toast.makeText(this, "Xin moi nhap so", Toast.LENGTH_SHORT).show();
@@ -221,15 +221,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         }
                     } else {
                         congContinue();
-                        Toast.makeText(this, "+++++++++", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "+++++++++ conitinue", Toast.LENGTH_SHORT).show();
                         feelResult = 1;
                     }
                 }
             }
             break;
             case R.id.btn_number_tru: {
-                //feelResult = 1;
-                loadPhepToan(2);
+
+                feel = 0;
+                input = edt_input.getText().toString();
+                if (input.equals("")) {
+                    Toast.makeText(this, "Xin moi nhap so", Toast.LENGTH_SHORT).show();
+                } else {
+
+                    if (feelResult != 2) {
+
+                        isLoadingPhepToanSub++; // co the su dung feel de check loi nay
+                        if (isLoadingPhepToanSub >= 2) {
+                            Toast.makeText(this, "Vui long khong kick hai lan dau - ", Toast.LENGTH_SHORT).show();
+                            clearDataAll();
+                        } else {
+                            Log.e("isLoadingPhepToan: ", "- 0");
+                            loadPhepToan(2);
+                            tru();
+                        }
+                    } else {
+                        truContinue();
+                        Toast.makeText(this, "-------- continue", Toast.LENGTH_SHORT).show();
+                        feelResult = 1;
+                    }
+                }
             }
             break;
             case R.id.btn_number_nhan: {
@@ -307,7 +329,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         resultFloat = 0;
         result = "";
         body_tv_result = "";
-
+        first = 0;
         itemPhay = 0;
         edt_input.setText("" + input);
         //tv_result.setText("");
@@ -332,6 +354,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //input = "";
                 //edt_input.setText(""+input);
             } else if (itemPhay == 0 && isLoadingPhepToan == 2) {
+
+                input = "";
+                input = edt_input.getText().toString();
+                result = resultInt - Integer.parseInt(input) + "";
+                resultInt = resultInt + Integer.parseInt(input);
+                edt_input.setText("" + result);
 
             } else if (itemPhay == 0 && isLoadingPhepToan == 3) {
                 if (resultInt == 0) {
@@ -384,6 +412,49 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void tru() {
 
+        if(first == 0){
+            first ++;
+            if (itemPhay == 0) {
+                //Log.e()
+                //Toast.makeText(this, "trutrutru", Toast.LENGTH_SHORT).show();
+                input = edt_input.getText().toString();
+                resultInt = (resultInt - Integer.parseInt(input))*-1;  // cau lenh se dung khi cong lien tiep va ko click dau bang
+                input = "";
+                edt_input.setText(resultInt + "");
+
+            } else if (itemPhay > 0) {
+                resultFloat = Float.parseFloat(edt_input.getText().toString());
+            }
+        }else {
+            first ++;
+            if (itemPhay == 0) {
+                //Log.e()
+                //Toast.makeText(this, "trutrutru", Toast.LENGTH_SHORT).show();
+                input = "";
+                input = edt_input.getText().toString();
+                resultInt = (resultInt - Integer.parseInt(input));  // cau lenh se dung khi cong lien tiep va ko click dau bang
+                Toast.makeText(this, ""+resultInt, Toast.LENGTH_SHORT).show();
+                input = "";
+                edt_input.setText(resultInt + "");
+
+            } else if (itemPhay > 0) {
+                resultFloat = Float.parseFloat(edt_input.getText().toString());
+            }
+        }
+    }
+
+    public void truContinue(){
+        if (itemPhay == 0) {
+            //Log.e()
+            input = "";
+            resultInt = Integer.parseInt(edt_input.getText().toString());
+            edt_input.setText("");
+            resultInt = resultInt - 0;  // cau lenh se dung khi cong lien tiep va ko click dau bang
+            edt_input.setText(resultInt + "");
+
+        } else if (itemPhay > 0) {
+            resultFloat = Float.parseFloat(edt_input.getText().toString());
+        }
     }
 
     public void nhan() {
