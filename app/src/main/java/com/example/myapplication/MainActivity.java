@@ -1,7 +1,7 @@
 package com.example.myapplication;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private int isLoadingPhepToanSub;
     private int itemPhay;
     private int feel;
+    private int feelResult;
 
     private Button btn_number0, btn_number1, btn_number2, btn_number3, btn_number4, btn_number5, btn_number6, btn_number7, btn_number8, btn_number9;
     private Button btn_number_cong, btn_number_C, btn_number_tru, btn_number_AC, btn_number_nhan, btn_number_phay, btn_number_chia, btn_number_result;
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void anhxa() {
         edt_input = (TextView) findViewById(R.id.edt_input);
-        tv_result = (TextView) findViewById(R.id.txt_result);
+        //tv_result = (TextView) findViewById(R.id.txt_result);
 
         btn_number0 = (Button) findViewById(R.id.btn_number0);
         btn_number1 = (Button) findViewById(R.id.btn_number1);
@@ -87,11 +88,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
 
-        body_tv_result = tv_result.getText().toString();
+        //body_tv_result = tv_result.getText().toString();
         switch (v.getId()) {
             case R.id.btn_number0: {
-                feel = 1;
                 clearData();
+                feel = 1;
+                feelResult = 0;
 
                 input = input + "0";
                 edt_input.setText("" + input);
@@ -100,10 +102,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             break;
             case R.id.btn_number1: {
-                feel = 1;
-
                 clearData();
-
+                feel = 1;
+                feelResult = 0;
                 input = input + "1";
                 edt_input.setText("" + input);
 
@@ -111,9 +112,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             break;
             case R.id.btn_number2: {
-
-                feel = 1;
                 clearData();
+                feel = 1;
+                feelResult = 0;
 
                 input = input + "2";
                 edt_input.setText("" + input);
@@ -122,9 +123,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             break;
             case R.id.btn_number3: {
-
-                feel = 1;
                 clearData();
+                feel = 1;
+                feelResult = 0;
 
                 input = input + "3";
                 edt_input.setText("" + input);
@@ -133,100 +134,147 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             break;
             case R.id.btn_number4: {
-                feel = 1;
                 clearData();
+                feel = 1;
+                feelResult = 0;
 
                 input = input + "4";
                 edt_input.setText("" + input);
 
+                setSubIsLoading();
             }
             break;
             case R.id.btn_number5: {
-
-                feel = 1;
                 clearData();
+                feel = 1;
+                feelResult = 0;
 
                 input = input + "5";
                 edt_input.setText("" + input);
+
+                setSubIsLoading();
             }
             break;
             case R.id.btn_number6: {
-                feel = 1;
                 clearData();
+                feel = 1;
+                feelResult = 0;
 
                 input = input + "6";
                 edt_input.setText("" + input);
+
+                setSubIsLoading();
             }
             break;
             case R.id.btn_number7: {
-                feel = 1;
                 clearData();
+                feel = 1;
+                feelResult = 0;
 
                 input = input + "7";
                 edt_input.setText("" + input);
+
+                setSubIsLoading();
             }
             break;
             case R.id.btn_number8: {
-
-                feel = 1;
                 clearData();
-
+                feel = 1;
+                feelResult = 0;
                 input = input + "8";
                 edt_input.setText("" + input);
+
+                setSubIsLoading();
             }
             break;
             case R.id.btn_number9: {
-                feel = 1;
                 clearData();
-
+                feel = 1;
+                feelResult = 0;
                 input = input + "9";
                 edt_input.setText("" + input);
 
+                setSubIsLoading();
 
             }
             break;
             case R.id.btn_number_cong: {
+
                 feel = 0;
+                //feelResult = 1;
                 input = edt_input.getText().toString();
                 if (input.equals("")) {
                     Toast.makeText(this, "Xin moi nhap so", Toast.LENGTH_SHORT).show();
                 } else {
-                    isLoadingPhepToanSub++;
-                    if (isLoadingPhepToanSub >= 2) {
-                        Toast.makeText(this, "Vui long khong kick hai lan dau + ", Toast.LENGTH_SHORT).show();
-                        clearDataAll();
-                    } else {
-                        Log.e("isLoadingPhepToan: ", "+ 0");
-                        loadPhepToan(1);
-                        cong();
 
+                    if (feelResult != 2) {
+
+                        isLoadingPhepToanSub++; // co the su dung feel de check loi nay
+                        if (isLoadingPhepToanSub >= 2) {
+                            Toast.makeText(this, "Vui long khong kick hai lan dau + ", Toast.LENGTH_SHORT).show();
+                            clearDataAll();
+                        } else {
+                            Log.e("isLoadingPhepToan: ", "+ 0");
+                            loadPhepToan(1);
+                            cong();
+
+                        }
+                    } else {
+                        congContinue();
+                        Toast.makeText(this, "+++++++++", Toast.LENGTH_SHORT).show();
+                        feelResult = 1;
                     }
                 }
             }
             break;
             case R.id.btn_number_tru: {
+                //feelResult = 1;
                 loadPhepToan(2);
             }
             break;
             case R.id.btn_number_nhan: {
 
-                loadPhepToan(3);
-                nhan();
+                feel = 0;
+                input = edt_input.getText().toString();
+                if (input.equals("")) {
+                    Toast.makeText(this, "Xin moi nhap so", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (feelResult != 2) {
+                        isLoadingPhepToanSub++; // co the su dung feel de check loi nay
+                        if (isLoadingPhepToanSub >= 2) {
+                            Toast.makeText(this, "Vui long khong kick hai lan dau * ", Toast.LENGTH_SHORT).show();
+                            clearDataAll();
+                        } else {
+                            Log.e("isLoadingPhepToan: ", "* 0");
+                            loadPhepToan(3);
+                            nhan();
+                        }
+                    } else {
+                        nhanContinue();
+                        feelResult = 1;
+                    }
+                }
             }
             break;
             case R.id.btn_number_chia: {
+                //feelResult = 1;
                 loadPhepToan(4);
             }
             break;
             case R.id.btn_number_C: {
+                //feelResult = 1;
 
+                input = edt_input.getText().toString();
+                deleteEnd("" + input);
             }
             break;
             case R.id.btn_number_AC: {
+                //feelResult = 1;
                 clearDataAll();
             }
             break;
             case R.id.btn_number_phay: {
+                //feelResult = 1;
                 itemPhay++;
                 input = input + ".";
                 edt_input.setText("" + input);
@@ -240,12 +288,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void clearData() {
-        if (!body_tv_result.equals("")) {
+        //if (!body_tv_result.equals("")) {
+        if (feelResult == 2) {
+
             input = "";
             resultInt = 0;
             resultFloat = 0;
             result = "";
-            tv_result.setText(result + "");
+            //tv_result.setText(result + "");
         }
     }
 
@@ -260,23 +310,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         itemPhay = 0;
         edt_input.setText("" + input);
-        tv_result.setText("");
+        //tv_result.setText("");
         isLoadingPhepToan = 0;
     }
 
     public void resultData() {
 
         if (feel == 0) {
-            Toast.makeText(this, "phep toan sai", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Phep toan sai", Toast.LENGTH_SHORT).show();
+            clearDataAll();
         } else {
+            feel = 0;
+            feelResult = 2;
 
             if (itemPhay == 0 && isLoadingPhepToan == 1) {
                 input = "";
                 input = edt_input.getText().toString();
                 result = resultInt + Integer.parseInt(input) + "";
                 resultInt = resultInt + Integer.parseInt(input);
-                tv_result.setText(result + "");
-
+                edt_input.setText("" + result);
+                //input = "";
+                //edt_input.setText(""+input);
             } else if (itemPhay == 0 && isLoadingPhepToan == 2) {
 
             } else if (itemPhay == 0 && isLoadingPhepToan == 3) {
@@ -284,8 +338,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     resultInt = 1;
                 }
                 input = "";
-                result = resultInt * Integer.parseInt(edt_input.getText().toString()) + "";
-                tv_result.setText(result + "");
+                input = edt_input.getText().toString();
+                result = resultInt * Integer.parseInt(input) + "";
+                edt_input.setText("" + result);
+
             } else if (itemPhay == 0 && isLoadingPhepToan == 4) {
 
             } else if (itemPhay > 0) {
@@ -298,10 +354,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         this.isLoadingPhepToan = isLoadingPhepToan;
     }
 
-    public int getPhepToan() {
-        return isLoadingPhepToan;
-    }
-
     public void cong() {
         if (itemPhay == 0) {
             //Log.e()
@@ -309,6 +361,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             input = edt_input.getText().toString();
             resultInt = resultInt + Integer.parseInt(input);  // cau lenh se dung khi cong lien tiep va ko click dau bang
             input = "";
+            edt_input.setText(resultInt + "");
+
+        } else if (itemPhay > 0) {
+            resultFloat = Float.parseFloat(edt_input.getText().toString());
+        }
+    }
+
+    public void congContinue() {
+        if (itemPhay == 0) {
+            //Log.e()
+            input = "";
+            resultInt = Integer.parseInt(edt_input.getText().toString());
+            edt_input.setText("");
+            resultInt = resultInt + 0;  // cau lenh se dung khi cong lien tiep va ko click dau bang
             edt_input.setText(resultInt + "");
 
         } else if (itemPhay > 0) {
@@ -338,6 +404,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    public void nhanContinue(){
+        if (itemPhay == 0) {
+            //Log.e()
+            input = "";
+            resultInt = Integer.parseInt(edt_input.getText().toString());
+            edt_input.setText("");
+            resultInt = resultInt *1;  // cau lenh se dung khi cong lien tiep va ko click dau bang
+            edt_input.setText(resultInt + "");
+
+        } else if (itemPhay > 0) {
+            resultFloat = Float.parseFloat(edt_input.getText().toString());
+        }
+    }
+
     public void chia() {
 
     }
@@ -347,11 +427,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         back.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL));
     }
 
-    public String DeleteEnd(String number) {
+    public String deleteEnd(String number) {
 
-        int lengtht = number.length();
-        String cut = number.substring(0, lengtht - 1);
-        return cut;
+        if (number.equals("")) {
+            clearDataAll();
+            return "";
+        }
+        {
+            int lengtht = number.length();
+            String cut = number.substring(0, lengtht - 1);
+            return cut;
+        }
     }
 
     public void setSubIsLoading() {
@@ -366,8 +452,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         input = edt_input.getText().toString();
         outState.putString("Kinput", "" + input);
-        body_tv_result = tv_result.getText().toString();
-        outState.putString("Kresult", "" + body_tv_result);
+        //body_tv_result = tv_result.getText().toString();
+        //outState.putString("Kresult", "" + body_tv_result);
 
     }
 
@@ -378,12 +464,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (savedInstanceState != null) {
 
             input = savedInstanceState.getString("Kinput");
-            body_tv_result = savedInstanceState.getString("Kresult");
+            //body_tv_result = savedInstanceState.getString("Kresult");
 
-            tv_result.setText("" + body_tv_result);
+            //tv_result.setText("" + body_tv_result);
             edt_input.setText("" + input);
 
-            resultInt = Integer.parseInt(body_tv_result);
+            //resultInt = Integer.parseInt(body_tv_result);
         }
     }
 }
